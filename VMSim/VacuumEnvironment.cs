@@ -1,0 +1,173 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace VMSim
+{
+    public class VacuumEnvironment : Environment
+    {
+        // 2x2 grid representing the vacuum environment: 1 - dirty, 0 - clean
+        private int[,] _grid = new int[2, 2];
+
+        private List<Dirt> _dirts = new List<Dirt>();
+
+        private int _agentX;
+        private int _agentY;
+        private Random _rand;
+
+        public int TotalDirtCount { get; }
+        public int TotalCleanedCount { get; set; } = 0;
+
+        public VacuumEnvironment()
+        {
+            _rand = new Random();
+
+            // Randomly initialize the grid with dirty (1) and clean (0) cells
+            for (int row = 0; row < 2; row++)
+            {
+                for (int col = 0; col < 2; col++)
+                {
+                    _grid[row, col] = _rand.Next(0, 2); // Randomly assign 0 or 1
+                }
+            }
+
+            // Start the agent at top-left corner (0, 0)
+            _agentX = 0;
+            _agentY = 0;
+
+            // Initialize dirt objects with random offsets for rendering
+            InitializeDirt();
+
+            TotalDirtCount = _dirts.Count;
+        }
+
+        public int[,] Grid => _grid;
+        
+        public List<Dirt> Dirts => _dirts;
+
+        private void InitializeDirt()
+        {
+            int rows = _grid.GetLength(0);
+            int cols = _grid.GetLength(1);
+
+            int randomOffset = 25;
+
+            for (int row = 0; row < rows; row++)
+            {
+                for (int col = 0; col < cols; col++)
+                {
+                    int offsetX = _rand.Next(-randomOffset, randomOffset + 1);
+                    int offsetY = _rand.Next(-randomOffset, randomOffset + 1);
+
+                    if (IsDirty(row, col))
+                    {
+                        _dirts.Add(new Dirt(row, col, offsetX, offsetY));
+                    }
+                }
+            }
+        }
+
+        public bool IsDirty(int x, int y)
+        {
+            return _grid[x, y] == 1;
+        }
+
+        public bool IsAllCleaned()
+        {
+            return _dirts.Count == 0;
+        }
+
+        private void CleanCell(int x, int y)
+        {
+            _grid[x, y] = 0; // Mark the cell as clean
+
+            // Remove the corresponding dirt object from the list
+            _dirts.RemoveAll(d => d.Row == x && d.Col == y);
+
+            TotalCleanedCount++;
+        }
+
+        public int[] AgentLoc()
+        {
+            return new int[] { _agentX, _agentY };
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Vacuum Environment Grid State:");
+
+            for (int row = 0; row < 2; row++)
+            {
+                for (int col = 0; col < 2; col++)
+                {
+                    sb.Append(_grid[row, col] + " ");
+                }
+                sb.AppendLine();
+            }
+
+            sb.AppendLine();
+
+            sb.AppendLine($"Agent Position: ({_agentX}, {_agentY})\n");
+            
+            return sb.ToString();
+        }
+
+        public override void ExecuteAction(Agent agent, string action)
+        {
+            // Implementation for executing actions in the vacuum environment
+            string act = action as string;
+
+            if (act == null)
+            {
+                agent.Performance -= 1; // Penalize for invalid action
+                return;
+            }
+
+            if (act.Equals("Suck"))
+            {
+                if (IsDirty(_agentX, _agentY))
+                {
+                    agent.Performance += 10; // Reward for cleaning
+                    CleanCell(_agentX, _agentY);
+                }
+            }
+            else if (act.Equals("Up") && _agentX > 0)
+            {
+                _agentX--;
+                agent.Performance -= 1; // Cost for moving
+            }
+            else if (act.Equals("Down") && _agentX < 1)
+            {
+                _agentX++;
+                agent.Performance -= 1; // Cost for moving
+            }
+            else if (act.Equals("Left") && _agentY > 0)
+            {
+                _agentY--;
+                agent.Performance -= 1; // Cost for moving
+            }
+            else if (act.Equals("Right") && _agentY < 1)
+            {
+                _agentY++;
+                agent.Performance -= 1; // Cost for moving
+            }
+            else
+            {
+                agent.Performance -= 1; // Penalize for invalid action
+            }
+        }
+
+        public override Tuple<int, int, bool> Percept(Agent agent)
+        {
+            // Implementation for perceiving the environment
+            bool isDirty = _grid[_agentX, _agentY] == 1;
+
+            return Tuple.Create<int, int, bool>(_agentX, _agentY, isDirty);
+        }
+    }
+}
