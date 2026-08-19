@@ -50,6 +50,7 @@
     <Compile Include="ButtonUtil.cs" />
     <Compile Include="Dirt.cs" />
     <Compile Include="Environment.cs" />
+    <Compile Include="SimpleReflextAgent.cs" />
     <Compile Include="VacuumWorldForm.cs">
       <SubType>Form</SubType>
     </Compile>
