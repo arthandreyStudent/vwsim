@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="VWSim.Core/VWSim.Core.csproj" Id="d2b74efc-0755-4176-a9f0-c1d2b79b2e26" />
+  <Project Path="VWSim/VWSim.csproj" Id="ded0fe83-fa27-4724-a5a5-fe9556ce1cd2" />
+  <Project Path="VWSimConsole/VWSimConsole.csproj" Id="91d63200-7e0e-4a0f-87ac-92742b8328cf" />
+</Solution>

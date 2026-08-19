@@ -9,7 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace VMSim
+using VWSim.Core;
+
+namespace VWSim
 {
     public partial class VacuumWorldForm : Form
     {
@@ -17,8 +19,7 @@ namespace VMSim
         private System.Windows.Forms.Timer _cleaningTimer;
         private int _animationStep = 0;
 
-        VacuumEnvironment env = new VacuumEnvironment();
-        RandomAgent agent = new RandomAgent();
+        VacuumSimulation simulation;
 
         private CancellationTokenSource _cancellationTokenSource;
 
@@ -32,10 +33,21 @@ namespace VMSim
         {
             InitializeComponent();
 
+            InitVacuumSimulation();
             InitRenderer();
             InitCancelButton();
             InitLabelStatus();
             InitCleaningTimer();
+        }
+
+        private void InitVacuumSimulation()
+        {
+            simulation = new VacuumSimulation(
+                new VacuumEnvironment(),
+                new List<Agent> {
+                    new RandomAgent(), new SimpleReflexAgent()
+                }
+            );
         }
 
         private void InitRenderer()
@@ -55,14 +67,14 @@ namespace VMSim
 
         private void DrawVacuumEnv()
         {
-            Bitmap image = _renderer.Render(env);
+            Bitmap image = _renderer.Render(simulation.Env);
 
-            if (pictureBoxVacuumWorld.Image != null)
+            if (pictureBoxRAVacuumWorld.Image != null)
             {
-                pictureBoxVacuumWorld.Image.Dispose();
+                pictureBoxRAVacuumWorld.Image.Dispose();
             }
 
-            pictureBoxVacuumWorld.Image = image;
+            pictureBoxRAVacuumWorld.Image = image;
         }
 
         private void ShowDoneCleaningLabel()
@@ -84,8 +96,6 @@ namespace VMSim
 
         private async void buttonSimulate_Click(object sender, EventArgs e)
         {
-            env = new VacuumEnvironment();
-            agent = new RandomAgent();
             DrawVacuumEnv();
 
             _cancellationTokenSource = new CancellationTokenSource();
@@ -107,8 +117,8 @@ namespace VMSim
 
             try
             {
-                richTextBoxEnvironmentLog.Text = "Creating 2x2 Vacuum World...\n\n";
-                richTextBoxEnvironmentLog.Text += env;
+                richTextBoxRALog.Text = "Creating 2x2 Vacuum World...\n\n";
+                richTextBoxRALog.Text += env;
 
                 _cleaningTimer.Start();
 
@@ -142,16 +152,16 @@ namespace VMSim
                         locationText = $"({tup.Item1}, {tup.Item2})";
                     }
 
-                    richTextBoxEnvironmentLog.AppendText($"Step {step + 1}: Action = {action} | Location = {locationText} | Score = {agent.Performance}\n");
+                    richTextBoxRALog.AppendText($"Step {step + 1}: Action = {action} | Location = {locationText} | Score = {agent.Performance}\n");
 
                     await Task.Delay(LOG_DELAY_MS, cancellationToken);
                 }
 
                 isAllCleaned = env.IsAllCleaned();
 
-                richTextBoxEnvironmentLog.AppendText($"\nFINAL SCORE: {agent.Performance}\n");
-                richTextBoxEnvironmentLog.AppendText($"\nAll Dirts Cleaned: {isAllCleaned.ToString().ToUpper()}\n");
-                richTextBoxEnvironmentLog.AppendText($"Cleaned Dirts: {env.TotalCleanedCount} / {env.TotalDirtCount}\n");
+                richTextBoxRALog.AppendText($"\nFINAL SCORE: {agent.Performance}\n");
+                richTextBoxRALog.AppendText($"\nAll Dirts Cleaned: {isAllCleaned.ToString().ToUpper()}\n");
+                richTextBoxRALog.AppendText($"Cleaned Dirts: {env.TotalCleanedCount} / {env.TotalDirtCount}\n");
 
                 ShowDoneCleaningLabel();
             }
@@ -159,10 +169,10 @@ namespace VMSim
             {
                 isAllCleaned = env.IsAllCleaned();
 
-                richTextBoxEnvironmentLog.AppendText("\nSimulation canceled by user.\n");
-                richTextBoxEnvironmentLog.AppendText($"\nFINAL SCORE: {agent.Performance}\n");
-                richTextBoxEnvironmentLog.AppendText($"\nAll Dirts Cleaned: {isAllCleaned.ToString().ToUpper()}\n");
-                richTextBoxEnvironmentLog.AppendText($"Cleaned Dirts: {env.TotalCleanedCount} / {env.TotalDirtCount}\n");
+                richTextBoxRALog.AppendText("\nSimulation canceled by user.\n");
+                richTextBoxRALog.AppendText($"\nFINAL SCORE: {agent.Performance}\n");
+                richTextBoxRALog.AppendText($"\nAll Dirts Cleaned: {isAllCleaned.ToString().ToUpper()}\n");
+                richTextBoxRALog.AppendText($"Cleaned Dirts: {env.TotalCleanedCount} / {env.TotalDirtCount}\n");
 
                 labelStatus.Text = "CANCELLED.";
             }

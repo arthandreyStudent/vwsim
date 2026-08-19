@@ -4,9 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace VMSim
+namespace VWSim.Core
 {
     public class VacuumEnvironment : Environment
     {
@@ -17,30 +16,18 @@ namespace VMSim
 
         private int _agentX;
         private int _agentY;
-        private Random _rand;
 
         public int TotalDirtCount { get; }
         public int TotalCleanedCount { get; set; } = 0;
 
-        public VacuumEnvironment()
+        public VacuumEnvironment(VacuumWorldState initialState)
         {
-            _rand = new Random();
+            _grid = initialState.Grid.Clone() as int[,];
 
-            // Randomly initialize the grid with dirty (1) and clean (0) cells
-            for (int row = 0; row < 2; row++)
-            {
-                for (int col = 0; col < 2; col++)
-                {
-                    _grid[row, col] = _rand.Next(0, 2); // Randomly assign 0 or 1
-                }
-            }
+            _dirts = initialState.Dirts.Select(d => new Dirt(d.Row, d.Col, d.OffsetX, d.OffsetY)).ToList();
 
-            // Start the agent at top-left corner (0, 0)
-            _agentX = 0;
-            _agentY = 0;
-
-            // Initialize dirt objects with random offsets for rendering
-            InitializeDirt();
+            _agentX = initialState.AgentX;
+            _agentY = initialState.AgentY;
 
             TotalDirtCount = _dirts.Count;
         }
@@ -48,28 +35,6 @@ namespace VMSim
         public int[,] Grid => _grid;
         
         public List<Dirt> Dirts => _dirts;
-
-        private void InitializeDirt()
-        {
-            int rows = _grid.GetLength(0);
-            int cols = _grid.GetLength(1);
-
-            int randomOffset = 25;
-
-            for (int row = 0; row < rows; row++)
-            {
-                for (int col = 0; col < cols; col++)
-                {
-                    int offsetX = _rand.Next(-randomOffset, randomOffset + 1);
-                    int offsetY = _rand.Next(-randomOffset, randomOffset + 1);
-
-                    if (IsDirty(row, col))
-                    {
-                        _dirts.Add(new Dirt(row, col, offsetX, offsetY));
-                    }
-                }
-            }
-        }
 
         public bool IsDirty(int x, int y)
         {

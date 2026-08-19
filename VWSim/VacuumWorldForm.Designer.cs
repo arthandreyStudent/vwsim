@@ -1,4 +1,4 @@
-﻿namespace VMSim
+﻿namespace VWSim
 {
     partial class VacuumWorldForm
     {
@@ -28,25 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBoxVacuumWorld = new System.Windows.Forms.PictureBox();
+            this.pictureBoxRAVacuumWorld = new System.Windows.Forms.PictureBox();
             this.buttonSimulate = new System.Windows.Forms.Button();
-            this.richTextBoxEnvironmentLog = new System.Windows.Forms.RichTextBox();
+            this.richTextBoxRALog = new System.Windows.Forms.RichTextBox();
             this.labelStatus = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.labelVMSim = new System.Windows.Forms.Label();
+            this.labelVWSim = new System.Windows.Forms.Label();
             this.labelSubtitle = new System.Windows.Forms.Label();
             this.labelRandomAgent = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVacuumWorld)).BeginInit();
+            this.labelSimpleReflexAgent = new System.Windows.Forms.Label();
+            this.richTextBoxSRALog = new System.Windows.Forms.RichTextBox();
+            this.pictureBoxSRAVacuumWorld = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRAVacuumWorld)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSRAVacuumWorld)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBoxVacuumWorld
+            // pictureBoxRAVacuumWorld
             // 
-            this.pictureBoxVacuumWorld.BackColor = System.Drawing.Color.Black;
-            this.pictureBoxVacuumWorld.Location = new System.Drawing.Point(471, 73);
-            this.pictureBoxVacuumWorld.Name = "pictureBoxVacuumWorld";
-            this.pictureBoxVacuumWorld.Size = new System.Drawing.Size(250, 250);
-            this.pictureBoxVacuumWorld.TabIndex = 1;
-            this.pictureBoxVacuumWorld.TabStop = false;
+            this.pictureBoxRAVacuumWorld.BackColor = System.Drawing.Color.Black;
+            this.pictureBoxRAVacuumWorld.Location = new System.Drawing.Point(471, 73);
+            this.pictureBoxRAVacuumWorld.Name = "pictureBoxRAVacuumWorld";
+            this.pictureBoxRAVacuumWorld.Size = new System.Drawing.Size(250, 250);
+            this.pictureBoxRAVacuumWorld.TabIndex = 1;
+            this.pictureBoxRAVacuumWorld.TabStop = false;
             // 
             // buttonSimulate
             // 
@@ -61,17 +65,17 @@
             this.buttonSimulate.UseVisualStyleBackColor = false;
             this.buttonSimulate.Click += new System.EventHandler(this.buttonSimulate_Click);
             // 
-            // richTextBoxEnvironmentLog
+            // richTextBoxRALog
             // 
-            this.richTextBoxEnvironmentLog.BackColor = System.Drawing.Color.Black;
-            this.richTextBoxEnvironmentLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBoxEnvironmentLog.Font = new System.Drawing.Font("Inter", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBoxEnvironmentLog.ForeColor = System.Drawing.Color.Lime;
-            this.richTextBoxEnvironmentLog.Location = new System.Drawing.Point(471, 336);
-            this.richTextBoxEnvironmentLog.Name = "richTextBoxEnvironmentLog";
-            this.richTextBoxEnvironmentLog.Size = new System.Drawing.Size(399, 484);
-            this.richTextBoxEnvironmentLog.TabIndex = 6;
-            this.richTextBoxEnvironmentLog.Text = "";
+            this.richTextBoxRALog.BackColor = System.Drawing.Color.Black;
+            this.richTextBoxRALog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBoxRALog.Font = new System.Drawing.Font("Inter", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBoxRALog.ForeColor = System.Drawing.Color.Lime;
+            this.richTextBoxRALog.Location = new System.Drawing.Point(471, 336);
+            this.richTextBoxRALog.Name = "richTextBoxRALog";
+            this.richTextBoxRALog.Size = new System.Drawing.Size(399, 484);
+            this.richTextBoxRALog.TabIndex = 6;
+            this.richTextBoxRALog.Text = "";
             // 
             // labelStatus
             // 
@@ -98,16 +102,16 @@
             this.buttonCancel.UseVisualStyleBackColor = false;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
-            // labelVMSim
+            // labelVWSim
             // 
-            this.labelVMSim.AutoSize = true;
-            this.labelVMSim.Font = new System.Drawing.Font("Unispace", 72F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelVMSim.ForeColor = System.Drawing.Color.White;
-            this.labelVMSim.Location = new System.Drawing.Point(39, 61);
-            this.labelVMSim.Name = "labelVMSim";
-            this.labelVMSim.Size = new System.Drawing.Size(344, 115);
-            this.labelVMSim.TabIndex = 9;
-            this.labelVMSim.Text = "VWSim";
+            this.labelVWSim.AutoSize = true;
+            this.labelVWSim.Font = new System.Drawing.Font("Unispace", 72F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelVWSim.ForeColor = System.Drawing.Color.White;
+            this.labelVWSim.Location = new System.Drawing.Point(39, 61);
+            this.labelVWSim.Name = "labelVWSim";
+            this.labelVWSim.Size = new System.Drawing.Size(344, 115);
+            this.labelVWSim.TabIndex = 9;
+            this.labelVWSim.Text = "VWSim";
             // 
             // labelSubtitle
             // 
@@ -131,38 +135,77 @@
             this.labelRandomAgent.TabIndex = 11;
             this.labelRandomAgent.Text = "Random Agent";
             // 
+            // labelSimpleReflexAgent
+            // 
+            this.labelSimpleReflexAgent.AutoSize = true;
+            this.labelSimpleReflexAgent.Font = new System.Drawing.Font("Unispace", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSimpleReflexAgent.ForeColor = System.Drawing.Color.White;
+            this.labelSimpleReflexAgent.Location = new System.Drawing.Point(989, 858);
+            this.labelSimpleReflexAgent.Name = "labelSimpleReflexAgent";
+            this.labelSimpleReflexAgent.Size = new System.Drawing.Size(298, 29);
+            this.labelSimpleReflexAgent.TabIndex = 12;
+            this.labelSimpleReflexAgent.Text = "Simple Reflex Agent";
+            // 
+            // richTextBoxSRALog
+            // 
+            this.richTextBoxSRALog.BackColor = System.Drawing.Color.Black;
+            this.richTextBoxSRALog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBoxSRALog.Font = new System.Drawing.Font("Inter", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBoxSRALog.ForeColor = System.Drawing.Color.Lime;
+            this.richTextBoxSRALog.Location = new System.Drawing.Point(935, 336);
+            this.richTextBoxSRALog.Name = "richTextBoxSRALog";
+            this.richTextBoxSRALog.Size = new System.Drawing.Size(399, 484);
+            this.richTextBoxSRALog.TabIndex = 13;
+            this.richTextBoxSRALog.Text = "";
+            // 
+            // pictureBoxSRAVacuumWorld
+            // 
+            this.pictureBoxSRAVacuumWorld.BackColor = System.Drawing.Color.Black;
+            this.pictureBoxSRAVacuumWorld.Location = new System.Drawing.Point(935, 73);
+            this.pictureBoxSRAVacuumWorld.Name = "pictureBoxSRAVacuumWorld";
+            this.pictureBoxSRAVacuumWorld.Size = new System.Drawing.Size(250, 250);
+            this.pictureBoxSRAVacuumWorld.TabIndex = 14;
+            this.pictureBoxSRAVacuumWorld.TabStop = false;
+            // 
             // VacuumWorldForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.ClientSize = new System.Drawing.Size(1784, 961);
+            this.Controls.Add(this.pictureBoxSRAVacuumWorld);
+            this.Controls.Add(this.richTextBoxSRALog);
+            this.Controls.Add(this.labelSimpleReflexAgent);
             this.Controls.Add(this.labelRandomAgent);
             this.Controls.Add(this.labelSubtitle);
-            this.Controls.Add(this.labelVMSim);
+            this.Controls.Add(this.labelVWSim);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.labelStatus);
-            this.Controls.Add(this.richTextBoxEnvironmentLog);
+            this.Controls.Add(this.richTextBoxRALog);
             this.Controls.Add(this.buttonSimulate);
-            this.Controls.Add(this.pictureBoxVacuumWorld);
+            this.Controls.Add(this.pictureBoxRAVacuumWorld);
             this.Name = "VacuumWorldForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "VMSim | Vacuum World Simulator";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxVacuumWorld)).EndInit();
+            this.Text = "VWSim | Vacuum World Simulator";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRAVacuumWorld)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSRAVacuumWorld)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.PictureBox pictureBoxVacuumWorld;
+        private System.Windows.Forms.PictureBox pictureBoxRAVacuumWorld;
         private System.Windows.Forms.Button buttonSimulate;
-        private System.Windows.Forms.RichTextBox richTextBoxEnvironmentLog;
+        private System.Windows.Forms.RichTextBox richTextBoxRALog;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.Label labelVMSim;
+        private System.Windows.Forms.Label labelVWSim;
         private System.Windows.Forms.Label labelSubtitle;
         private System.Windows.Forms.Label labelRandomAgent;
+        private System.Windows.Forms.Label labelSimpleReflexAgent;
+        private System.Windows.Forms.RichTextBox richTextBoxSRALog;
+        private System.Windows.Forms.PictureBox pictureBoxSRAVacuumWorld;
     }
 }
 

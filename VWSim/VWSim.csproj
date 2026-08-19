@@ -47,10 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agent.cs" />
+    <Compile Include="AgentSimulation.cs" />
     <Compile Include="ButtonUtil.cs" />
     <Compile Include="Dirt.cs" />
     <Compile Include="Environment.cs" />
-    <Compile Include="SimpleReflextAgent.cs" />
+    <Compile Include="SimpleReflexAgent.cs" />
+    <Compile Include="VacuumSimulation.cs" />
     <Compile Include="VacuumWorldForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +88,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VWSim.Core\VWSim.Core.csproj">
+      <Project>{d2b74efc-0755-4176-a9f0-c1d2b79b2e26}</Project>
+      <Name>VWSim.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

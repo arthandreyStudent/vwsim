@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace VMSim
+using VWSim.Core;
+
+namespace VWSim
 {
     public static class ButtonUtil
     {

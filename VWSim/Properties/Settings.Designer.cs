@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace VMSim.Properties
+namespace VWSim.Properties
 {
 
 
