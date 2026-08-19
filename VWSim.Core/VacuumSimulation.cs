@@ -15,12 +15,17 @@ namespace VWSim.Core
             _agentSimulations = agentSimulations;
         }
 
-        public void RunStep()
+        public List<SimulationStepResult> RunStep()
         {
+            var results = new List<SimulationStepResult>();
+
             foreach (var agentSimulation in _agentSimulations)
             {
-                agentSimulation.RunStep();
+                SimulationStepResult result = agentSimulation.RunStep();
+                results.Add(result);
             }
+
+            return results;
         }
         
     }

@@ -20,22 +20,13 @@ namespace VWSim.Core
             Name = name;
         }
         
-        public void RunStep()
+        public SimulationStepResult RunStep()
         {
             var percept = Environment.Percept(Agent);
             var action = Agent.Program(percept) as string;
             Environment.ExecuteAction(Agent, action);
 
-            var tup = percept;
-
-            string locationText = "(?, ?)";
-
-            if (tup != null)
-            {
-                locationText = $"({tup.Item1}, {tup.Item2})";
-            }
-
-            Console.WriteLine($"Agent: {Name} | Action: {action} | Location: {locationText} | Performance: {Agent.Performance}");
+            return new SimulationStepResult(action, Environment.AgentLoc(), Agent.Performance);
         }
     }
 }
