@@ -28,29 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBoxRAVacuumWorld = new System.Windows.Forms.PictureBox();
             this.buttonSimulate = new System.Windows.Forms.Button();
-            this.richTextBoxRALog = new System.Windows.Forms.RichTextBox();
             this.labelStatus = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelVWSim = new System.Windows.Forms.Label();
             this.labelSubtitle = new System.Windows.Forms.Label();
-            this.labelRandomAgent = new System.Windows.Forms.Label();
-            this.labelSimpleReflexAgent = new System.Windows.Forms.Label();
-            this.richTextBoxSRALog = new System.Windows.Forms.RichTextBox();
-            this.pictureBoxSRAVacuumWorld = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRAVacuumWorld)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSRAVacuumWorld)).BeginInit();
+            this.agentSimulationPanelRandom = new VWSim.AgentSimulationPanel();
+            this.agentSimulationPanelSFA = new VWSim.AgentSimulationPanel();
             this.SuspendLayout();
-            // 
-            // pictureBoxRAVacuumWorld
-            // 
-            this.pictureBoxRAVacuumWorld.BackColor = System.Drawing.Color.Black;
-            this.pictureBoxRAVacuumWorld.Location = new System.Drawing.Point(471, 73);
-            this.pictureBoxRAVacuumWorld.Name = "pictureBoxRAVacuumWorld";
-            this.pictureBoxRAVacuumWorld.Size = new System.Drawing.Size(250, 250);
-            this.pictureBoxRAVacuumWorld.TabIndex = 1;
-            this.pictureBoxRAVacuumWorld.TabStop = false;
             // 
             // buttonSimulate
             // 
@@ -64,18 +49,6 @@
             this.buttonSimulate.Text = "SIMULATE";
             this.buttonSimulate.UseVisualStyleBackColor = false;
             this.buttonSimulate.Click += new System.EventHandler(this.buttonSimulate_Click);
-            // 
-            // richTextBoxRALog
-            // 
-            this.richTextBoxRALog.BackColor = System.Drawing.Color.Black;
-            this.richTextBoxRALog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBoxRALog.Font = new System.Drawing.Font("Inter", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBoxRALog.ForeColor = System.Drawing.Color.Lime;
-            this.richTextBoxRALog.Location = new System.Drawing.Point(471, 336);
-            this.richTextBoxRALog.Name = "richTextBoxRALog";
-            this.richTextBoxRALog.Size = new System.Drawing.Size(399, 484);
-            this.richTextBoxRALog.TabIndex = 6;
-            this.richTextBoxRALog.Text = "";
             // 
             // labelStatus
             // 
@@ -124,48 +97,21 @@
             this.labelSubtitle.TabIndex = 10;
             this.labelSubtitle.Text = "Vacuum World Pocket Simulator";
             // 
-            // labelRandomAgent
+            // agentSimulationPanelRandom
             // 
-            this.labelRandomAgent.AutoSize = true;
-            this.labelRandomAgent.Font = new System.Drawing.Font("Unispace", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelRandomAgent.ForeColor = System.Drawing.Color.White;
-            this.labelRandomAgent.Location = new System.Drawing.Point(580, 858);
-            this.labelRandomAgent.Name = "labelRandomAgent";
-            this.labelRandomAgent.Size = new System.Drawing.Size(193, 29);
-            this.labelRandomAgent.TabIndex = 11;
-            this.labelRandomAgent.Text = "Random Agent";
+            this.agentSimulationPanelRandom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.agentSimulationPanelRandom.Location = new System.Drawing.Point(453, 61);
+            this.agentSimulationPanelRandom.Name = "agentSimulationPanelRandom";
+            this.agentSimulationPanelRandom.Size = new System.Drawing.Size(430, 861);
+            this.agentSimulationPanelRandom.TabIndex = 11;
             // 
-            // labelSimpleReflexAgent
+            // agentSimulationPanelSFA
             // 
-            this.labelSimpleReflexAgent.AutoSize = true;
-            this.labelSimpleReflexAgent.Font = new System.Drawing.Font("Unispace", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelSimpleReflexAgent.ForeColor = System.Drawing.Color.White;
-            this.labelSimpleReflexAgent.Location = new System.Drawing.Point(989, 858);
-            this.labelSimpleReflexAgent.Name = "labelSimpleReflexAgent";
-            this.labelSimpleReflexAgent.Size = new System.Drawing.Size(298, 29);
-            this.labelSimpleReflexAgent.TabIndex = 12;
-            this.labelSimpleReflexAgent.Text = "Simple Reflex Agent";
-            // 
-            // richTextBoxSRALog
-            // 
-            this.richTextBoxSRALog.BackColor = System.Drawing.Color.Black;
-            this.richTextBoxSRALog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBoxSRALog.Font = new System.Drawing.Font("Inter", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBoxSRALog.ForeColor = System.Drawing.Color.Lime;
-            this.richTextBoxSRALog.Location = new System.Drawing.Point(935, 336);
-            this.richTextBoxSRALog.Name = "richTextBoxSRALog";
-            this.richTextBoxSRALog.Size = new System.Drawing.Size(399, 484);
-            this.richTextBoxSRALog.TabIndex = 13;
-            this.richTextBoxSRALog.Text = "";
-            // 
-            // pictureBoxSRAVacuumWorld
-            // 
-            this.pictureBoxSRAVacuumWorld.BackColor = System.Drawing.Color.Black;
-            this.pictureBoxSRAVacuumWorld.Location = new System.Drawing.Point(935, 73);
-            this.pictureBoxSRAVacuumWorld.Name = "pictureBoxSRAVacuumWorld";
-            this.pictureBoxSRAVacuumWorld.Size = new System.Drawing.Size(250, 250);
-            this.pictureBoxSRAVacuumWorld.TabIndex = 14;
-            this.pictureBoxSRAVacuumWorld.TabStop = false;
+            this.agentSimulationPanelSFA.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.agentSimulationPanelSFA.Location = new System.Drawing.Point(909, 61);
+            this.agentSimulationPanelSFA.Name = "agentSimulationPanelSFA";
+            this.agentSimulationPanelSFA.Size = new System.Drawing.Size(430, 861);
+            this.agentSimulationPanelSFA.TabIndex = 12;
             // 
             // VacuumWorldForm
             // 
@@ -173,39 +119,29 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.ClientSize = new System.Drawing.Size(1784, 961);
-            this.Controls.Add(this.pictureBoxSRAVacuumWorld);
-            this.Controls.Add(this.richTextBoxSRALog);
-            this.Controls.Add(this.labelSimpleReflexAgent);
-            this.Controls.Add(this.labelRandomAgent);
+            this.Controls.Add(this.agentSimulationPanelSFA);
+            this.Controls.Add(this.agentSimulationPanelRandom);
             this.Controls.Add(this.labelSubtitle);
             this.Controls.Add(this.labelVWSim);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.labelStatus);
-            this.Controls.Add(this.richTextBoxRALog);
             this.Controls.Add(this.buttonSimulate);
-            this.Controls.Add(this.pictureBoxRAVacuumWorld);
             this.Name = "VacuumWorldForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "VWSim | Vacuum World Simulator";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRAVacuumWorld)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSRAVacuumWorld)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.PictureBox pictureBoxRAVacuumWorld;
         private System.Windows.Forms.Button buttonSimulate;
-        private System.Windows.Forms.RichTextBox richTextBoxRALog;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Label labelVWSim;
         private System.Windows.Forms.Label labelSubtitle;
-        private System.Windows.Forms.Label labelRandomAgent;
-        private System.Windows.Forms.Label labelSimpleReflexAgent;
-        private System.Windows.Forms.RichTextBox richTextBoxSRALog;
-        private System.Windows.Forms.PictureBox pictureBoxSRAVacuumWorld;
+        private AgentSimulationPanel agentSimulationPanelRandom;
+        private AgentSimulationPanel agentSimulationPanelSFA;
     }
 }
 

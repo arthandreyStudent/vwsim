@@ -46,13 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Agent.cs" />
-    <Compile Include="AgentSimulation.cs" />
+    <Compile Include="AgentSimulationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AgentSimulationPanel.Designer.cs">
+      <DependentUpon>AgentSimulationPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="ButtonUtil.cs" />
-    <Compile Include="Dirt.cs" />
-    <Compile Include="Environment.cs" />
-    <Compile Include="SimpleReflexAgent.cs" />
-    <Compile Include="VacuumSimulation.cs" />
     <Compile Include="VacuumWorldForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,9 +61,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RandomAgent.cs" />
-    <Compile Include="VacuumEnvironment.cs" />
     <Compile Include="VacuumWorldRenderer.cs" />
+    <EmbeddedResource Include="AgentSimulationPanel.resx">
+      <DependentUpon>AgentSimulationPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VacuumWorldForm.resx">
       <DependentUpon>VacuumWorldForm.cs</DependentUpon>
     </EmbeddedResource>
