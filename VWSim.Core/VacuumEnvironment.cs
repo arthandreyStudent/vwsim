@@ -77,7 +77,7 @@ namespace VWSim.Core
 
             sb.AppendLine();
 
-            sb.AppendLine($"Agent Position: ({_agentX}, {_agentY})\n");
+            sb.AppendLine($"Agent Position: ({_agentX}, {_agentY})");
             
             return sb.ToString();
         }
