@@ -59,13 +59,13 @@ namespace VMSim
              * Positive offsetX = move right, Negative offsetX = move left
              * Positive offsetY = move down, Negative offsetY = move up
              */
-            int offsetXMultiplier = -20;
-            int offsetYMultiplier = -20;
+            int offsetXMultiplier = -14;
+            int offsetYMultiplier = -14;
 
             int centerX = agentX * _cellSize + _cellSize / 2 + offsetXMultiplier;
             int centerY = agentY * _cellSize + _cellSize / 2 + offsetYMultiplier;
 
-            int radius = 25;
+            int radius = 20;
 
             using (Brush agentBrush = new SolidBrush(Color.Red))
             {
@@ -84,11 +84,11 @@ namespace VMSim
 
             Brush dirtBrush = new SolidBrush(Color.Sienna);
 
-            int dirtWidth = 12;
-            int dirtHeight = 12;
+            int dirtWidth = 8;
+            int dirtHeight = 8;
 
-            int constantOffsetX = 40; // Adjust this value to control the distance of dirt from the center of the cell
-            int constantOffsetY = 40; // Adjust this value to control the distance of dirt from the center of the cell
+            int constantOffsetX = 15; // Adjust this value to control the distance of dirt from the center of the cell
+            int constantOffsetY = 15; // Adjust this value to control the distance of dirt from the center of the cell
 
             List<Dirt> dirts = env.Dirts;
 
