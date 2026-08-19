@@ -23,9 +23,8 @@ namespace VMSim
         private CancellationTokenSource _cancellationTokenSource;
 
         private const int GRID_SIZE = 2;
-        private const int PICTUREBOX_SIZE = 400;
+        private const int PICTUREBOX_SIZE = 250;
         private const int CELL_SIZE = PICTUREBOX_SIZE / GRID_SIZE; // 200x200 per cell
-        private const int AGENT_RADIUS = 25;
 
         private const int LOG_DELAY_MS = 2000; // Delay between log updates in milliseconds
 

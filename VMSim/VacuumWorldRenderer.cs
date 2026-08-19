@@ -65,7 +65,7 @@ namespace VMSim
             int centerX = agentX * _cellSize + _cellSize / 2 + offsetXMultiplier;
             int centerY = agentY * _cellSize + _cellSize / 2 + offsetYMultiplier;
 
-            int radius = 30;
+            int radius = 25;
 
             using (Brush agentBrush = new SolidBrush(Color.Red))
             {
