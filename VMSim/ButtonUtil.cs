@@ -11,14 +11,7 @@ namespace VMSim
     {
         public static void SetButtonState(Button button, bool isEnabled)
         {
-            if (button.InvokeRequired)
-            {
-                button.Invoke(new Action(() => button.Enabled = isEnabled));
-            }
-            else
-            {
-                button.Enabled = isEnabled;
-            }
+            button.Enabled = isEnabled;
         }
     }
 }
