@@ -20,7 +20,7 @@ namespace VWSim
         {
             InitializeComponent();
 
-            _renderer = new VacuumWorldRenderer(250, 125); // 2x2 grid, so each cell is 125x125
+            _renderer = new VacuumWorldRenderer(350, 175); // 2x2 grid, so each cell is 175x175
         }
 
         public void Initialize(AgentSimulation agentSimulation)

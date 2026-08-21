@@ -42,7 +42,7 @@
             this.buttonSimulate.BackColor = System.Drawing.Color.White;
             this.buttonSimulate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSimulate.Font = new System.Drawing.Font("Inter", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSimulate.Location = new System.Drawing.Point(73, 232);
+            this.buttonSimulate.Location = new System.Drawing.Point(35, 232);
             this.buttonSimulate.Name = "buttonSimulate";
             this.buttonSimulate.Size = new System.Drawing.Size(144, 45);
             this.buttonSimulate.TabIndex = 5;
@@ -67,7 +67,7 @@
             this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCancel.Font = new System.Drawing.Font("Inter", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonCancel.ForeColor = System.Drawing.Color.White;
-            this.buttonCancel.Location = new System.Drawing.Point(241, 232);
+            this.buttonCancel.Location = new System.Drawing.Point(203, 232);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(142, 45);
             this.buttonCancel.TabIndex = 8;
@@ -80,7 +80,7 @@
             this.labelVWSim.AutoSize = true;
             this.labelVWSim.Font = new System.Drawing.Font("Unispace", 72F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelVWSim.ForeColor = System.Drawing.Color.White;
-            this.labelVWSim.Location = new System.Drawing.Point(39, 61);
+            this.labelVWSim.Location = new System.Drawing.Point(1, 61);
             this.labelVWSim.Name = "labelVWSim";
             this.labelVWSim.Size = new System.Drawing.Size(344, 115);
             this.labelVWSim.TabIndex = 9;
@@ -91,7 +91,7 @@
             this.labelSubtitle.AutoSize = true;
             this.labelSubtitle.Font = new System.Drawing.Font("Unispace", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelSubtitle.ForeColor = System.Drawing.Color.White;
-            this.labelSubtitle.Location = new System.Drawing.Point(69, 176);
+            this.labelSubtitle.Location = new System.Drawing.Point(31, 176);
             this.labelSubtitle.Name = "labelSubtitle";
             this.labelSubtitle.Size = new System.Drawing.Size(299, 19);
             this.labelSubtitle.TabIndex = 10;
@@ -100,7 +100,7 @@
             // agentSimulationPanelRandom
             // 
             this.agentSimulationPanelRandom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
-            this.agentSimulationPanelRandom.Location = new System.Drawing.Point(453, 61);
+            this.agentSimulationPanelRandom.Location = new System.Drawing.Point(394, 61);
             this.agentSimulationPanelRandom.Name = "agentSimulationPanelRandom";
             this.agentSimulationPanelRandom.Size = new System.Drawing.Size(430, 861);
             this.agentSimulationPanelRandom.TabIndex = 11;
@@ -108,7 +108,7 @@
             // agentSimulationPanelSFA
             // 
             this.agentSimulationPanelSFA.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
-            this.agentSimulationPanelSFA.Location = new System.Drawing.Point(909, 61);
+            this.agentSimulationPanelSFA.Location = new System.Drawing.Point(830, 61);
             this.agentSimulationPanelSFA.Name = "agentSimulationPanelSFA";
             this.agentSimulationPanelSFA.Size = new System.Drawing.Size(430, 861);
             this.agentSimulationPanelSFA.TabIndex = 12;
@@ -119,8 +119,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.ClientSize = new System.Drawing.Size(1784, 961);
-            this.Controls.Add(this.agentSimulationPanelSFA);
             this.Controls.Add(this.agentSimulationPanelRandom);
+            this.Controls.Add(this.agentSimulationPanelSFA);
             this.Controls.Add(this.labelSubtitle);
             this.Controls.Add(this.labelVWSim);
             this.Controls.Add(this.buttonCancel);

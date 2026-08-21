@@ -29,8 +29,8 @@ namespace VWSim
         private CancellationTokenSource _cancellationTokenSource;
 
         private const int GRID_SIZE = 2;
-        private const int PICTUREBOX_SIZE = 250;
-        private const int CELL_SIZE = PICTUREBOX_SIZE / GRID_SIZE; // 200x200 per cell
+        private const int PICTUREBOX_SIZE = 350;
+        private const int CELL_SIZE = PICTUREBOX_SIZE / GRID_SIZE; // 175x175 per cell
 
         private const int LOG_DELAY_MS = 1000; // Delay between log updates in milliseconds
 

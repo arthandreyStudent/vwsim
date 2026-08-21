@@ -89,8 +89,8 @@ namespace VWSim
             int dirtWidth = 8;
             int dirtHeight = 8;
 
-            int constantOffsetX = 20; // Adjust this value to control the distance of dirt from the center of the cell
-            int constantOffsetY = 20; // Adjust this value to control the distance of dirt from the center of the cell
+            int constantOffsetX = 25; // Adjust this value to control the distance of dirt from the center of the cell
+            int constantOffsetY = 25; // Adjust this value to control the distance of dirt from the center of the cell
 
             List<Dirt> dirts = env.Dirts;
 

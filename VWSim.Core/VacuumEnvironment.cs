@@ -101,22 +101,22 @@ namespace VWSim.Core
                     CleanCell(_agentX, _agentY);
                 }
             }
-            else if (act.Equals("Up") && _agentX > 0)
+            else if (act.Equals("MoveUp") && _agentX > 0)
             {
                 _agentX--;
                 agent.Performance -= 1; // Cost for moving
             }
-            else if (act.Equals("Down") && _agentX < 1)
+            else if (act.Equals("MoveDown") && _agentX < 1)
             {
                 _agentX++;
                 agent.Performance -= 1; // Cost for moving
             }
-            else if (act.Equals("Left") && _agentY > 0)
+            else if (act.Equals("MoveLeft") && _agentY > 0)
             {
                 _agentY--;
                 agent.Performance -= 1; // Cost for moving
             }
-            else if (act.Equals("Right") && _agentY < 1)
+            else if (act.Equals("MoveRight") && _agentY < 1)
             {
                 _agentY++;
                 agent.Performance -= 1; // Cost for moving

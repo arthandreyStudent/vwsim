@@ -39,9 +39,9 @@ namespace VWSim
             // pictureBoxVacuumWorld
             // 
             this.pictureBoxVacuumWorld.BackColor = System.Drawing.Color.Black;
-            this.pictureBoxVacuumWorld.Location = new System.Drawing.Point(84, 89);
+            this.pictureBoxVacuumWorld.Location = new System.Drawing.Point(14, 73);
             this.pictureBoxVacuumWorld.Name = "pictureBoxVacuumWorld";
-            this.pictureBoxVacuumWorld.Size = new System.Drawing.Size(250, 250);
+            this.pictureBoxVacuumWorld.Size = new System.Drawing.Size(350, 350);
             this.pictureBoxVacuumWorld.TabIndex = 0;
             this.pictureBoxVacuumWorld.TabStop = false;
             // 
@@ -51,9 +51,9 @@ namespace VWSim
             this.richTextBoxLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBoxLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBoxLog.ForeColor = System.Drawing.Color.Lime;
-            this.richTextBoxLog.Location = new System.Drawing.Point(14, 354);
+            this.richTextBoxLog.Location = new System.Drawing.Point(14, 440);
             this.richTextBoxLog.Name = "richTextBoxLog";
-            this.richTextBoxLog.Size = new System.Drawing.Size(399, 484);
+            this.richTextBoxLog.Size = new System.Drawing.Size(398, 398);
             this.richTextBoxLog.TabIndex = 1;
             this.richTextBoxLog.Text = "";
             // 
@@ -62,7 +62,7 @@ namespace VWSim
             this.labelAgentName.AutoSize = true;
             this.labelAgentName.Font = new System.Drawing.Font("Unispace", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelAgentName.ForeColor = System.Drawing.Color.White;
-            this.labelAgentName.Location = new System.Drawing.Point(79, 36);
+            this.labelAgentName.Location = new System.Drawing.Point(9, 23);
             this.labelAgentName.Name = "labelAgentName";
             this.labelAgentName.Size = new System.Drawing.Size(163, 29);
             this.labelAgentName.TabIndex = 2;

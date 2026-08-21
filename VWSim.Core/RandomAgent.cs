@@ -22,12 +22,10 @@ namespace VWSim.Core
 
             if (isDirty)
             {
-                return "Suck";
+                return AgentAction.Suck;
             }
 
-            string[] choices = { "Up", "Down", "Left", "Right" };
-
-            return choices[_rand.Next(choices.Length)];
+            return Agent.AllActions[_rand.Next(Agent.AllActions.Count)];
         }
     }
 }

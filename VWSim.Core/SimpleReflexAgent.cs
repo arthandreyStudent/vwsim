@@ -22,7 +22,7 @@ namespace VWSim.Core
 
             if (isDirty)
             {
-                return "Suck";
+                return AgentAction.Suck;
             }
 
             int x = tup.Item1;
@@ -35,35 +35,35 @@ namespace VWSim.Core
 
             if (canMoveUp && canMoveRight)
             {
-                return "Up";
+                return AgentAction.MoveUp;
             }
             else if (canMoveDown && canMoveRight)
             {
-                return "Right";   
+                return AgentAction.MoveRight;   
             }
             else if (canMoveDown && canMoveLeft)
             {
-                return "Down";
+                return AgentAction.MoveDown;
             }
             else if (canMoveUp && canMoveLeft)
             {
-                return "Left";
+                return AgentAction.MoveLeft;
             }
             else if (canMoveUp)
             {
-                return "Up";
+                return AgentAction.MoveUp;
             }
             else if (canMoveDown)
             {
-                return "Down";
+                return AgentAction.MoveDown;
             }
             else if (canMoveLeft)
             {
-                return "Left";
+                return AgentAction.MoveLeft;
             }
             else if (canMoveRight)
             {
-                return "Right";
+                return AgentAction.MoveRight;
             }
 
             return null;
