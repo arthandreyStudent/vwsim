@@ -35,6 +35,7 @@
             this.labelSubtitle = new System.Windows.Forms.Label();
             this.agentSimulationPanelRandom = new VWSim.AgentSimulationPanel();
             this.agentSimulationPanelSFA = new VWSim.AgentSimulationPanel();
+            this.agentSimulationPanelMBRA = new VWSim.AgentSimulationPanel();
             this.SuspendLayout();
             // 
             // buttonSimulate
@@ -108,10 +109,18 @@
             // agentSimulationPanelSFA
             // 
             this.agentSimulationPanelSFA.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
-            this.agentSimulationPanelSFA.Location = new System.Drawing.Point(830, 61);
+            this.agentSimulationPanelSFA.Location = new System.Drawing.Point(841, 61);
             this.agentSimulationPanelSFA.Name = "agentSimulationPanelSFA";
             this.agentSimulationPanelSFA.Size = new System.Drawing.Size(430, 861);
             this.agentSimulationPanelSFA.TabIndex = 12;
+            // 
+            // agentSimulationPanelMBRA
+            // 
+            this.agentSimulationPanelMBRA.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.agentSimulationPanelMBRA.Location = new System.Drawing.Point(1289, 61);
+            this.agentSimulationPanelMBRA.Name = "agentSimulationPanelMBRA";
+            this.agentSimulationPanelMBRA.Size = new System.Drawing.Size(430, 861);
+            this.agentSimulationPanelMBRA.TabIndex = 13;
             // 
             // VacuumWorldForm
             // 
@@ -119,6 +128,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.ClientSize = new System.Drawing.Size(1784, 961);
+            this.Controls.Add(this.agentSimulationPanelMBRA);
             this.Controls.Add(this.agentSimulationPanelRandom);
             this.Controls.Add(this.agentSimulationPanelSFA);
             this.Controls.Add(this.labelSubtitle);
@@ -142,6 +152,7 @@
         private System.Windows.Forms.Label labelSubtitle;
         private AgentSimulationPanel agentSimulationPanelRandom;
         private AgentSimulationPanel agentSimulationPanelSFA;
+        private AgentSimulationPanel agentSimulationPanelMBRA;
     }
 }
 

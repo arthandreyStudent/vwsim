@@ -69,6 +69,49 @@ namespace VWSim.Core
             }
         }
 
+        public string DefaultSimpleReflexMove()
+        {
+            bool canMoveUp = _currentX > 0;
+            bool canMoveDown = _currentX < 1;
+            bool canMoveLeft = _currentY > 0;
+            bool canMoveRight = _currentY < 1;
+
+            if (canMoveUp && canMoveRight)
+            {
+                return AgentAction.MoveUp;
+            }
+            else if (canMoveDown && canMoveRight)
+            {
+                return AgentAction.MoveRight;
+            }
+            else if (canMoveDown && canMoveLeft)
+            {
+                return AgentAction.MoveDown;
+            }
+            else if (canMoveUp && canMoveLeft)
+            {
+                return AgentAction.MoveLeft;
+            }
+            else if (canMoveUp)
+            {
+                return AgentAction.MoveUp;
+            }
+            else if (canMoveDown)
+            {
+                return AgentAction.MoveDown;
+            }
+            else if (canMoveLeft)
+            {
+                return AgentAction.MoveLeft;
+            }
+            else if (canMoveRight)
+            {
+                return AgentAction.MoveRight;
+            }
+
+            return null;
+        }
+
         private string ChooseNextMove()
         {
             if (_worldModel.TryGetValue((_currentX, _currentY + 1), out bool rightDirty) && rightDirty)
@@ -88,8 +131,8 @@ namespace VWSim.Core
                 return AgentAction.MoveDown;
             }
 
-            // Fallback if no adjacent dirty squares are found, move right by default
-            return AgentAction.MoveRight;
+            // Fallback to default simple reflex move if no adjacent dirty cells are found
+            return DefaultSimpleReflexMove();
         }
 
     }

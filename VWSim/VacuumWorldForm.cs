@@ -17,6 +17,7 @@ namespace VWSim
     {
         private AgentSimulation _randomAgentSimulation;
         private AgentSimulation _simpleReflexAgentSimulation;
+        private AgentSimulation _modelBasedReflexAgentSimulation;
 
         private VacuumSimulation _simulations;
 
@@ -68,17 +69,21 @@ namespace VWSim
 
             VacuumEnvironment randomAgentEnv = new VacuumEnvironment(initialState);
             VacuumEnvironment simpleReflexAgentEnv = new VacuumEnvironment(initialState);
+            VacuumEnvironment modelBasedReflexAgentEnv = new VacuumEnvironment(initialState);
 
             RandomAgent randomAgent = new RandomAgent();
             SimpleReflexAgent simpleReflexAgent = new SimpleReflexAgent();
+            ModelBasedReflexAgent modelBasedReflexAgent = new ModelBasedReflexAgent();
 
             _randomAgentSimulation = new AgentSimulation(randomAgentEnv, randomAgent, "Random Agent");
             _simpleReflexAgentSimulation = new AgentSimulation(simpleReflexAgentEnv, simpleReflexAgent, "Simple Reflex Agent");
+            _modelBasedReflexAgentSimulation = new AgentSimulation(modelBasedReflexAgentEnv, modelBasedReflexAgent, "Model-Based Reflex Agent");
 
             _simulations = new VacuumSimulation(
                             new List<AgentSimulation> { 
                                 _randomAgentSimulation, 
-                                _simpleReflexAgentSimulation 
+                                _simpleReflexAgentSimulation,
+                                _modelBasedReflexAgentSimulation
                             });
         }
 
@@ -86,18 +91,21 @@ namespace VWSim
         {
             agentSimulationPanelRandom.RenderAgentName("Random Agent");
             agentSimulationPanelSFA.RenderAgentName("Simple Reflex Agent");
+            agentSimulationPanelMBRA.RenderAgentName("Model-Based Reflex Agent");
         }
 
         private void InitAgentSimulationPanels()
         {
             agentSimulationPanelRandom.Initialize(_randomAgentSimulation);
             agentSimulationPanelSFA.Initialize(_simpleReflexAgentSimulation);
+            agentSimulationPanelMBRA.Initialize(_modelBasedReflexAgentSimulation);
         }
 
         private void ShowBreaklineToAgentPanels()
         {
             agentSimulationPanelRandom.PrintBreakLine();
             agentSimulationPanelSFA.PrintBreakLine();
+            agentSimulationPanelMBRA.PrintBreakLine();
         }
 
         private void ShowFinalResults(AgentSimulationPanel agentSimulationPanel, AgentSimulation agentSimulation)
@@ -135,9 +143,7 @@ namespace VWSim
             InitSimulations();
             InitAgentSimulationPanels();
 
-            agentSimulationPanelRandom.PrintBreakLine();
-            agentSimulationPanelSFA.PrintBreakLine();
-
+            ShowBreaklineToAgentPanels();
 
             _cancellationTokenSource = new CancellationTokenSource();
 
@@ -160,6 +166,7 @@ namespace VWSim
 
                     agentSimulationPanelRandom.UpdateSimulationStep(results[0], i + 1);
                     agentSimulationPanelSFA.UpdateSimulationStep(results[1], i + 1);
+                    agentSimulationPanelMBRA.UpdateSimulationStep(results[2], i + 1);
 
                     await Task.Delay(LOG_DELAY_MS, cancellationToken);
                 }
@@ -168,6 +175,7 @@ namespace VWSim
 
                 ShowFinalResults(agentSimulationPanelRandom, _randomAgentSimulation);
                 ShowFinalResults(agentSimulationPanelSFA, _simpleReflexAgentSimulation);
+                ShowFinalResults(agentSimulationPanelMBRA, _modelBasedReflexAgentSimulation);
 
                 ShowDoneCleaningLabel();
             }
@@ -177,6 +185,7 @@ namespace VWSim
 
                 ShowFinalResults(agentSimulationPanelRandom, _randomAgentSimulation);
                 ShowFinalResults(agentSimulationPanelSFA, _simpleReflexAgentSimulation);
+                ShowFinalResults(agentSimulationPanelMBRA, _modelBasedReflexAgentSimulation);
 
                 labelStatus.Text = "CANCELLED.";
             }

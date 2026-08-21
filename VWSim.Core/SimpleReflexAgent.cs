@@ -8,6 +8,8 @@ namespace VWSim.Core
 {
     public class SimpleReflexAgent : Agent
     {
+        private int _currentX = 0;
+        private int _currentY = 0;
 
         public override object Program(Tuple<int, int, bool> percept)
         {
@@ -25,13 +27,13 @@ namespace VWSim.Core
                 return AgentAction.Suck;
             }
 
-            int x = tup.Item1;
-            int y = tup.Item2;
+            _currentX = tup.Item1;
+            _currentY = tup.Item2;
 
-            bool canMoveUp = x > 0;
-            bool canMoveDown = x < 1;
-            bool canMoveLeft = y > 0;
-            bool canMoveRight = y < 1;
+            bool canMoveUp = _currentX > 0;
+            bool canMoveDown = _currentX < 1;
+            bool canMoveLeft = _currentY > 0;
+            bool canMoveRight = _currentY < 1;
 
             if (canMoveUp && canMoveRight)
             {
