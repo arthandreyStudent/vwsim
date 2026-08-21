@@ -134,27 +134,24 @@ namespace VWSim
             };
         }
 
-        private void TriggerAgentDoneUI(AgentSimulationPanel agentSimulationPanel)
-        {
-            agentSimulationPanel.Log("\n>>>>>>>>>>>>>> AGENT DONE <<<<<<<<<<<<<<<");
-            
-            // TODO: Show big text graphics here
-        }
-
         private async Task RunAgentSimulationAsync(
             AgentSimulation agentSimulation,
             AgentSimulationPanel agentSimPanel,
             CancellationToken cancellationToken,
-            int maxSteps = 15
+            int maxSteps = 20
         )
         {
+            bool finishedOnOwn = false;
+
             for (int step = 0; step < maxSteps; step++)
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
                 if (agentSimulation.Agent.AmIDoneCleaningAllDirtyCells)
                 {
-                    TriggerAgentDoneUI(agentSimPanel);
+                    finishedOnOwn = true;
+                    agentSimPanel.RenderAgentStatusOverlay("AGENT DONE", Color.LimeGreen);
+                    agentSimPanel.Log("\n>>>>>>>>>>>>>>>> AGENT DONE <<<<<<<<<<<<<<<");
                     break;
                 }
 
@@ -164,11 +161,18 @@ namespace VWSim
 
                 if (simResult.Action == "NoOp")
                 {
-                    TriggerAgentDoneUI(agentSimPanel);
+                    finishedOnOwn = true;
+                    agentSimPanel.RenderAgentStatusOverlay("AGENT DONE", Color.LimeGreen);
+                    agentSimPanel.Log("\n>>>>>>>>>>> AGENT DONE <<<<<<<<<<");
                     break;
                 }
 
                 await Task.Delay(LOG_DELAY_MS, cancellationToken);
+            }
+
+            if (!finishedOnOwn)
+            {
+                agentSimPanel.RenderAgentStatusOverlay("UNABLE TO INFER", Color.OrangeRed);
             }
 
             agentSimPanel.PrintBreakLine();

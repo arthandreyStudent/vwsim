@@ -86,5 +86,34 @@ namespace VWSim
         {
             richTextBoxLog.AppendText(message + System.Environment.NewLine);
         }
+
+        public void RenderAgentStatusOverlay(string titleText, Color textColor)
+        {
+            if (pictureBoxVacuumWorld.Image == null) return;
+
+            using (Graphics g = Graphics.FromImage(pictureBoxVacuumWorld.Image))
+            {
+                // Draw the semi-transparent overlay mask
+                // Color.FromArgb takes (Alpha, Red, Green, Blue). Alpha 180 creates the mask effect.
+                using (Brush overlayBrush = new SolidBrush(Color.FromArgb(180, 0, 0, 0)))
+                {
+                    g.FillRectangle(overlayBrush, 0, 0, pictureBoxVacuumWorld.Width, pictureBoxVacuumWorld.Height);
+                }
+
+                using (Font textFont = new Font("Unispace", 24, FontStyle.Bold))
+                using (Brush textBrush = new SolidBrush(textColor))
+                {
+                    SizeF textSize = g.MeasureString(titleText, textFont);
+                    float textX = (pictureBoxVacuumWorld.Width - textSize.Width) / 2;
+                    float textY = (pictureBoxVacuumWorld.Height - textSize.Height) / 2;
+
+                    g.DrawString(titleText, textFont, textBrush, textX, textY);
+                }
+            }
+
+            // Force the PictureBox to refresh and show the updated image
+            pictureBoxVacuumWorld.Invalidate();
+        }
+
     }
 }
