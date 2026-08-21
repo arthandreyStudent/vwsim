@@ -124,6 +124,10 @@ namespace VWSim.Core
                 _agentY++;
                 agent.Performance -= 1; // Cost for moving
             }
+            else if (act.Equals("NoOp"))
+            {
+                // No operation, no change in performance
+            }
             else
             {
                 agent.Performance -= 1; // Penalize for invalid action

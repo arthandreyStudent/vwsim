@@ -44,7 +44,7 @@ namespace VWSim
 
         public void PrintBreakLine()
         {
-            int numDashes = 70; // Number of dashes for the break line
+            int numDashes = 85; // Number of dashes for the break line
             Log(new string('-', numDashes) + System.Environment.NewLine);
         }
 

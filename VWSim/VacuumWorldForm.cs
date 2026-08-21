@@ -134,6 +134,47 @@ namespace VWSim
             };
         }
 
+        private void TriggerAgentDoneUI(AgentSimulationPanel agentSimulationPanel)
+        {
+            agentSimulationPanel.Log("\n>>>>>>>>>>>>>> AGENT DONE <<<<<<<<<<<<<<<");
+            
+            // TODO: Show big text graphics here
+        }
+
+        private async Task RunAgentSimulationAsync(
+            AgentSimulation agentSimulation,
+            AgentSimulationPanel agentSimPanel,
+            CancellationToken cancellationToken,
+            int maxSteps = 15
+        )
+        {
+            for (int step = 0; step < maxSteps; step++)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                if (agentSimulation.Agent.AmIDoneCleaningAllDirtyCells)
+                {
+                    TriggerAgentDoneUI(agentSimPanel);
+                    break;
+                }
+
+                SimulationStepResult simResult = agentSimulation.RunStep();
+
+                agentSimPanel.UpdateSimulationStep(simResult, step + 1);
+
+                if (simResult.Action == "NoOp")
+                {
+                    TriggerAgentDoneUI(agentSimPanel);
+                    break;
+                }
+
+                await Task.Delay(LOG_DELAY_MS, cancellationToken);
+            }
+
+            agentSimPanel.PrintBreakLine();
+            ShowFinalResults(agentSimPanel, agentSimulation);
+        }
+
         private async void buttonSimulate_Click(object sender, EventArgs e)
         {
             labelStatus.Text = "Cleaning.";
@@ -156,26 +197,13 @@ namespace VWSim
 
             try
             {
-                int steps = 25;
+                // Launch all three tasks
+                Task randomAgentTask = RunAgentSimulationAsync(_randomAgentSimulation, agentSimulationPanelRandom, cancellationToken);
+                Task simpleReflexAgentTask = RunAgentSimulationAsync(_simpleReflexAgentSimulation, agentSimulationPanelSFA, cancellationToken);
+                Task mbrAgentTask = RunAgentSimulationAsync(_modelBasedReflexAgentSimulation, agentSimulationPanelMBRA, cancellationToken);
 
-                for (int i = 0; i < steps; i++)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-
-                    List<SimulationStepResult> results = _simulations.RunStep();
-
-                    agentSimulationPanelRandom.UpdateSimulationStep(results[0], i + 1);
-                    agentSimulationPanelSFA.UpdateSimulationStep(results[1], i + 1);
-                    agentSimulationPanelMBRA.UpdateSimulationStep(results[2], i + 1);
-
-                    await Task.Delay(LOG_DELAY_MS, cancellationToken);
-                }
-
-                ShowBreaklineToAgentPanels();
-
-                ShowFinalResults(agentSimulationPanelRandom, _randomAgentSimulation);
-                ShowFinalResults(agentSimulationPanelSFA, _simpleReflexAgentSimulation);
-                ShowFinalResults(agentSimulationPanelMBRA, _modelBasedReflexAgentSimulation);
+                // Wait for all TASKS to complete
+                await Task.WhenAll(randomAgentTask, simpleReflexAgentTask, mbrAgentTask);
 
                 ShowDoneCleaningLabel();
             }

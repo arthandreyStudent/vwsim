@@ -53,6 +53,8 @@ namespace VWSim
             this.richTextBoxLog.ForeColor = System.Drawing.Color.Lime;
             this.richTextBoxLog.Location = new System.Drawing.Point(14, 440);
             this.richTextBoxLog.Name = "richTextBoxLog";
+            this.richTextBoxLog.ReadOnly = true;
+            this.richTextBoxLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
             this.richTextBoxLog.Size = new System.Drawing.Size(398, 398);
             this.richTextBoxLog.TabIndex = 1;
             this.richTextBoxLog.Text = "";
