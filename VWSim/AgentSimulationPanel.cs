@@ -44,7 +44,7 @@ namespace VWSim
 
         public void PrintBreakLine()
         {
-            int numDashes = 85; // Number of dashes for the break line
+            int numDashes = 90; // Number of dashes for the break line
             Log(new string('-', numDashes) + System.Environment.NewLine);
         }
 
@@ -84,7 +84,7 @@ namespace VWSim
 
         public void Log(string message)
         {
-            richTextBoxLog.AppendText(message + System.Environment.NewLine);
+            richTextBoxLog.AppendText(System.Environment.NewLine + message + System.Environment.NewLine);
         }
 
         public void RenderAgentStatusOverlay(string titleText, Color textColor)

@@ -157,6 +157,33 @@ namespace VWSim.Core
             return AgentAction.NoOp; // Safest fallback if completely boxed in
         }
 
+        public override string GetThought(Tuple<int, int, bool> percept, string executedAction)
+        {
+            bool isDirty = percept.Item3;
+
+            if (executedAction == AgentAction.NoOp)
+            {
+                return "[THOUGHT] Memory verified: All cells explored. \n0 dirty cells remaining.";
+            }
+
+            if (isDirty) 
+            {
+                return "[THOUGHT] Percept: Dirt Detected! Recording position to memory and cleaning...";
+            }
+
+            return $"[THOUGHT] Analyzing memory map... Navigating to unexplored cell...: {executedAction}";
+        }
+
+        public override string GetCompletionThought(bool completedOnOwn)
+        {
+            if (completedOnOwn)
+            {
+                return "[THOUGHT] Memory verified: All cells explored & clean. \nMy job is done here!";
+            }
+
+            return "[THOUGHT] Step limit reached before full map verification was completed.";
+        }
+
 
     }
 }

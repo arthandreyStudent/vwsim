@@ -101,13 +101,6 @@ namespace VWSim
             agentSimulationPanelMBRA.Initialize(_modelBasedReflexAgentSimulation);
         }
 
-        private void ShowBreaklineToAgentPanels()
-        {
-            agentSimulationPanelRandom.PrintBreakLine();
-            agentSimulationPanelSFA.PrintBreakLine();
-            agentSimulationPanelMBRA.PrintBreakLine();
-        }
-
         private void ShowFinalResults(AgentSimulationPanel agentSimulationPanel, AgentSimulation agentSimulation)
         {
             string finalScore = $"FINAL SCORE: {agentSimulation.Agent.Performance}\n\n";
@@ -147,23 +140,19 @@ namespace VWSim
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                if (agentSimulation.Agent.AmIDoneCleaningAllDirtyCells)
-                {
-                    finishedOnOwn = true;
-                    agentSimPanel.RenderAgentStatusOverlay("AGENT DONE", Color.LimeGreen);
-                    agentSimPanel.Log("\n>>>>>>>>>>>>>>>> AGENT DONE <<<<<<<<<<<<<<<");
-                    break;
-                }
-
+                var percept = agentSimulation.Environment.Percept(agentSimulation.Agent);
                 SimulationStepResult simResult = agentSimulation.RunStep();
 
-                agentSimPanel.UpdateSimulationStep(simResult, step + 1);
+                string agentThought = agentSimulation.Agent.GetThought(percept, simResult.Action);
 
-                if (simResult.Action == "NoOp")
+                agentSimPanel.UpdateSimulationStep(simResult, step + 1);
+                agentSimPanel.Log(agentThought);
+
+                if (agentSimulation.Agent.AmIDoneCleaningAllDirtyCells || simResult.Action == "NoOp")
                 {
                     finishedOnOwn = true;
                     agentSimPanel.RenderAgentStatusOverlay("AGENT DONE", Color.LimeGreen);
-                    agentSimPanel.Log("\n>>>>>>>>>>> AGENT DONE <<<<<<<<<<");
+                    agentSimPanel.Log(agentSimulation.Agent.GetCompletionThought(true));
                     break;
                 }
 
@@ -173,6 +162,7 @@ namespace VWSim
             if (!finishedOnOwn)
             {
                 agentSimPanel.RenderAgentStatusOverlay("UNABLE TO INFER", Color.OrangeRed);
+                agentSimPanel.Log(agentSimulation.Agent.GetCompletionThought(false));
             }
 
             agentSimPanel.PrintBreakLine();
@@ -188,7 +178,9 @@ namespace VWSim
             InitSimulations();
             InitAgentSimulationPanels();
 
-            ShowBreaklineToAgentPanels();
+            agentSimulationPanelRandom.PrintBreakLine();
+            agentSimulationPanelSFA.PrintBreakLine();
+            agentSimulationPanelMBRA.PrintBreakLine();
 
             _cancellationTokenSource = new CancellationTokenSource();
 
@@ -213,11 +205,20 @@ namespace VWSim
             }
             catch (OperationCanceledException)
             {
-                ShowBreaklineToAgentPanels();
+                agentSimulationPanelRandom.PrintBreakLine();
+                agentSimulationPanelSFA.PrintBreakLine();
+
+                agentSimulationPanelRandom.RenderAgentStatusOverlay("CANCELLED", Color.Red);
+                agentSimulationPanelSFA.RenderAgentStatusOverlay("CANCELLED", Color.Red);
+
+                if (!_modelBasedReflexAgentSimulation.Agent.AmIDoneCleaningAllDirtyCells)
+                {
+                    agentSimulationPanelMBRA.RenderAgentStatusOverlay("CANCELLED", Color.Red);
+                    ShowFinalResults(agentSimulationPanelMBRA, _modelBasedReflexAgentSimulation);
+                }
 
                 ShowFinalResults(agentSimulationPanelRandom, _randomAgentSimulation);
                 ShowFinalResults(agentSimulationPanelSFA, _simpleReflexAgentSimulation);
-                ShowFinalResults(agentSimulationPanelMBRA, _modelBasedReflexAgentSimulation);
 
                 labelStatus.Text = "CANCELLED.";
             }

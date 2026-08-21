@@ -72,5 +72,22 @@ namespace VWSim.Core
 
         }
 
+        public override string GetThought(Tuple<int, int, bool> percept, string executedAction)
+        {
+            bool isDirty = percept.Item3;
+
+            if (isDirty) 
+            {
+                return "[THOUGHT] Percept: Dirt Detected! Sensor triggered. Executing SUCK...";
+            }
+
+            return $"[THOUGHT] Percept: Cell is clean. Standard rule triggered: Move to adjacent square...: {executedAction}";
+        }
+
+        public override string GetCompletionThought(bool completedOnOwn)
+        {
+            return "[THOUGHT] Step limit reached. \nI cannot retain history or know if dirt exists elsewhere.";
+        }
+
     }
 }

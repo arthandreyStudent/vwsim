@@ -32,5 +32,18 @@ namespace VWSim.Core
 
         public abstract object Program(Tuple<int, int, bool> percept);
         public int Performance { get; set; } = 0;
+
+        public virtual string GetThought(Tuple<int, int, bool> percept, string executedAction)
+        {
+            return string.Empty;
+        }
+
+        public virtual string GetCompletionThought(bool completedOnOwn)
+        {
+            return completedOnOwn
+                ? "[THOUGHT] I have verified my work and completed the objective."
+                : "[THOUGHT] Max step limit reached.";
+        }
+
     }
 }
