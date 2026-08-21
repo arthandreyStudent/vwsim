@@ -26,15 +26,26 @@ namespace VWSim
         public void Initialize(AgentSimulation agentSimulation)
         {
             _agentSimulation = agentSimulation;
-            RenderAgentName(agentSimulation.Name);
-            ClearLog();
             RenderEnvironment();
+            ClearLog();
             DisplayEnvironmentState();
+        }
+
+        public void UpdateSimulationStep(SimulationStepResult result, int step)
+        {
+            RenderEnvironment();
+            DisplayResult(result, step);
         }
 
         public void RenderAgentName(string agentName)
         {
             labelAgentName.Text = agentName;
+        }
+
+        public void PrintBreakLine()
+        {
+            int numDashes = 70; // Number of dashes for the break line
+            Log(new string('-', numDashes) + System.Environment.NewLine);
         }
 
         public void ClearLog()

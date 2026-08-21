@@ -62,7 +62,7 @@ namespace VWSim
             this.labelAgentName.AutoSize = true;
             this.labelAgentName.Font = new System.Drawing.Font("Unispace", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelAgentName.ForeColor = System.Drawing.Color.White;
-            this.labelAgentName.Location = new System.Drawing.Point(79, 35);
+            this.labelAgentName.Location = new System.Drawing.Point(79, 36);
             this.labelAgentName.Name = "labelAgentName";
             this.labelAgentName.Size = new System.Drawing.Size(163, 29);
             this.labelAgentName.TabIndex = 2;

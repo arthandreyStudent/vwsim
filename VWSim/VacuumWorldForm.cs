@@ -32,18 +32,18 @@ namespace VWSim
         private const int PICTUREBOX_SIZE = 250;
         private const int CELL_SIZE = PICTUREBOX_SIZE / GRID_SIZE; // 200x200 per cell
 
-        private const int LOG_DELAY_MS = 2000; // Delay between log updates in milliseconds
+        private const int LOG_DELAY_MS = 1000; // Delay between log updates in milliseconds
 
         public VacuumWorldForm()
         {
             InitializeComponent();
 
             InitRenderer();
-            //InitSimulations();
+            InitAgentLabelName();
+
             InitCancelButton();
             InitLabelStatus();
             InitCleaningTimer();
-            //ConnectAgentSimulationPanels();
         }
 
         private void InitRenderer()
@@ -82,10 +82,31 @@ namespace VWSim
                             });
         }
 
-        private void ConnectAgentSimulationPanels()
+        private void InitAgentLabelName()
+        {
+            agentSimulationPanelRandom.RenderAgentName("Random Agent");
+            agentSimulationPanelSFA.RenderAgentName("Simple Reflex Agent");
+        }
+
+        private void InitAgentSimulationPanels()
         {
             agentSimulationPanelRandom.Initialize(_randomAgentSimulation);
             agentSimulationPanelSFA.Initialize(_simpleReflexAgentSimulation);
+        }
+
+        private void ShowBreaklineToAgentPanels()
+        {
+            agentSimulationPanelRandom.PrintBreakLine();
+            agentSimulationPanelSFA.PrintBreakLine();
+        }
+
+        private void ShowFinalResults(AgentSimulationPanel agentSimulationPanel, AgentSimulation agentSimulation)
+        {
+            string finalScore = $"FINAL SCORE: {agentSimulation.Agent.Performance}\n\n";
+            string cleanedStatus = $"Agent Able To Clean All Dirty Cells: {agentSimulation.Environment.IsAllCleaned().ToString().ToUpper()}\n" +
+                                   $"Dirts Cleaned: {agentSimulation.Environment.TotalCleanedCount} / {agentSimulation.Environment.TotalDirtCount}\n";
+
+            agentSimulationPanel.Log(finalScore + cleanedStatus);
         }
 
         private void ShowDoneCleaningLabel()
@@ -96,7 +117,7 @@ namespace VWSim
         private void InitCleaningTimer()
         {
             _cleaningTimer = new System.Windows.Forms.Timer();
-            _cleaningTimer.Interval = 500; // How fast the animation updates (in milliseconds)
+            _cleaningTimer.Interval = 500; // How fast the "Cleaning..." animation updates (in milliseconds)
 
             _cleaningTimer.Tick += (s, e) =>
             {
@@ -107,10 +128,16 @@ namespace VWSim
 
         private async void buttonSimulate_Click(object sender, EventArgs e)
         {
-            InitSimulations();
-            ConnectAgentSimulationPanels();
+            labelStatus.Text = "Cleaning.";
 
-            await Task.Delay(LOG_DELAY_MS);
+            _cleaningTimer.Start();
+
+            InitSimulations();
+            InitAgentSimulationPanels();
+
+            agentSimulationPanelRandom.PrintBreakLine();
+            agentSimulationPanelSFA.PrintBreakLine();
+
 
             _cancellationTokenSource = new CancellationTokenSource();
 
@@ -119,7 +146,7 @@ namespace VWSim
             ButtonUtil.SetButtonState(buttonSimulate, false);
             ButtonUtil.SetButtonState(buttonCancel, true);
 
-            _cleaningTimer.Start();
+            await Task.Delay(LOG_DELAY_MS);
 
             try
             {
@@ -131,16 +158,26 @@ namespace VWSim
 
                     List<SimulationStepResult> results = _simulations.RunStep();
 
-                    agentSimulationPanelRandom.DisplayResult(results[0], i + 1);
-                    agentSimulationPanelSFA.DisplayResult(results[1], i + 1);
+                    agentSimulationPanelRandom.UpdateSimulationStep(results[0], i + 1);
+                    agentSimulationPanelSFA.UpdateSimulationStep(results[1], i + 1);
 
                     await Task.Delay(LOG_DELAY_MS, cancellationToken);
                 }
+
+                ShowBreaklineToAgentPanels();
+
+                ShowFinalResults(agentSimulationPanelRandom, _randomAgentSimulation);
+                ShowFinalResults(agentSimulationPanelSFA, _simpleReflexAgentSimulation);
 
                 ShowDoneCleaningLabel();
             }
             catch (OperationCanceledException)
             {
+                ShowBreaklineToAgentPanels();
+
+                ShowFinalResults(agentSimulationPanelRandom, _randomAgentSimulation);
+                ShowFinalResults(agentSimulationPanelSFA, _simpleReflexAgentSimulation);
+
                 labelStatus.Text = "CANCELLED.";
             }
             finally

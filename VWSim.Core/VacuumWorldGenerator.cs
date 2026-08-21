@@ -28,7 +28,7 @@ namespace VWSim.Core
             }
 
             // Generate Dirt objects
-            int dirtRandomOffset = 25;
+            int dirtRandomOffset = 10;
 
             for (int row = 0; row < 2; row++)
             {
