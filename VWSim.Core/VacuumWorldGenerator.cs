@@ -44,7 +44,10 @@ namespace VWSim.Core
                 }
             }
 
-            return new VacuumWorldState(grid, dirts, 0, 0); // Agent starts at (0, 0)
+            return new VacuumWorldState(
+                grid, 
+                dirts
+            );
         }
 
     }

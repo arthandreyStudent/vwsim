@@ -156,7 +156,7 @@ namespace VWSim
 
             try
             {
-                int steps = 10;
+                int steps = 5;
 
                 for (int i = 0; i < steps; i++)
                 {

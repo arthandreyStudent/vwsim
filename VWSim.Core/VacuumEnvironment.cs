@@ -17,6 +17,9 @@ namespace VWSim.Core
         private int _agentX;
         private int _agentY;
 
+        // Generate a random position for the agent within the measured grid
+        private int[] _generatedPosition = AgentPositionGenerator.GeneratePosition();
+
         public int TotalDirtCount { get; }
         public int TotalCleanedCount { get; set; } = 0;
 
@@ -26,8 +29,8 @@ namespace VWSim.Core
 
             _dirts = initialState.Dirts.Select(d => new Dirt(d.Row, d.Col, d.OffsetX, d.OffsetY)).ToList();
 
-            _agentX = initialState.AgentX;
-            _agentY = initialState.AgentY;
+            _agentX = _generatedPosition[0];
+            _agentY = _generatedPosition[1];
 
             TotalDirtCount = _dirts.Count;
         }
