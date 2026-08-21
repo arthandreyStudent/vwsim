@@ -33,7 +33,7 @@ namespace VWSim
         private const int PICTUREBOX_SIZE = 350;
         private const int CELL_SIZE = PICTUREBOX_SIZE / GRID_SIZE; // 175x175 per cell
 
-        private const int LOG_DELAY_MS = 1000; // Delay between log updates in milliseconds
+        private const int LOG_DELAY_MS = 1500; // Delay between log updates in milliseconds
 
         public VacuumWorldForm()
         {
@@ -156,7 +156,7 @@ namespace VWSim
 
             try
             {
-                int steps = 5;
+                int steps = 25;
 
                 for (int i = 0; i < steps; i++)
                 {

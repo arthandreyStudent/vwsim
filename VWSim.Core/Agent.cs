@@ -13,6 +13,7 @@ namespace VWSim.Core
         public const string MoveDown = "MoveDown";
         public const string MoveLeft = "MoveLeft";
         public const string MoveRight = "MoveRight";
+        public const string NoOp = "NoOp";
     }
 
     public abstract class Agent
@@ -23,8 +24,11 @@ namespace VWSim.Core
             AgentAction.MoveUp,
             AgentAction.MoveDown,
             AgentAction.MoveLeft,
-            AgentAction.MoveRight
+            AgentAction.MoveRight,
+            AgentAction.NoOp
         };
+
+        public bool AmIDoneCleaningAllDirtyCells { get; set; } = false;
 
         public abstract object Program(Tuple<int, int, bool> percept);
         public int Performance { get; set; } = 0;

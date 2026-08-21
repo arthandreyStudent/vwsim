@@ -25,7 +25,7 @@ namespace VWSim.Core
                 return AgentAction.Suck;
             }
 
-            return Agent.AllActions[_rand.Next(Agent.AllActions.Count)];
+            return Agent.AllActions[_rand.Next(1, Agent.AllActions.Count - 1)];
         }
     }
 }

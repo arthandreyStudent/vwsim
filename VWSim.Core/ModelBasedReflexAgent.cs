@@ -1,139 +1,162 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace VWSim.Core
 {
     public class ModelBasedReflexAgent : Agent
     {
-        private int _currentX = 0;
-        private int _currentY = 0;
+        private (int x, int y) _currentPos = (0, 0);
 
         private string _lastAction = null;
 
         // Memory of this model-based reflex agent
         private readonly Dictionary<(int x, int y), bool> _worldModel = new Dictionary<(int x, int y), bool>();
 
+        // Boundaries coordinate that the agent discovers through movement attempts
+        private int? _minX, _maxX, _minY, _maxY;
+
         public override object Program(Tuple<int, int, bool> percept)
         {
-            UpdatePositionFromLastAction();
-
-            int sensorX = percept.Item1;
-            int sensorY = percept.Item2;
+            int sensedX = percept.Item1;
+            int sensedY = percept.Item2;
             bool isDirty = percept.Item3;
 
-            _currentX = sensorX;
-            _currentY = sensorY;
+            // Only record a boundary hit if the last action was a movement that failed to change coordinates
+            bool isMoveAction = _lastAction != AgentAction.Suck && _lastAction != AgentAction.NoOp;
 
-            // Update the world model with the current percept
-            _worldModel[(_currentX, _currentY)] = isDirty;
+            // Record if a move failed (either agent hit a boundary/wall)
+            if (_lastAction != null && isMoveAction && (sensedX, sensedY) == _currentPos)
+            {
+                RecordBoundaryHit(_lastAction, _currentPos);
+            }
 
-            string chosenAction = null;
+            _currentPos = (sensedX, sensedY);
+
+            _worldModel[_currentPos] = isDirty;
+
+            if (IsEnvironmentFullyExploredAndClean())
+            {
+                this.AmIDoneCleaningAllDirtyCells = true;
+                return AgentAction.NoOp;
+            }
 
             if (isDirty)
             {
-                chosenAction = AgentAction.Suck;
-            }
-            else
-            {
-                chosenAction = ChooseNextMove();
+                _lastAction = AgentAction.Suck;
+                return AgentAction.Suck;
             }
 
-            // Store the chosen action for the next iteration
-            _lastAction = chosenAction;
+            _lastAction = ChooseNextExplorationMove();
 
-            return chosenAction;
+            return _lastAction;
         }
 
-        private void UpdatePositionFromLastAction()
+        private void RecordBoundaryHit(string action, (int x, int y) pos)
         {
-            if (string.IsNullOrEmpty(_lastAction))
+            // Infer grid boundary relative to the current coordinates
+            switch (action)
             {
-                return;
-            }
-
-            switch (_lastAction)
-            {
-                case AgentAction.MoveRight:
-                    _currentY++;
-                    break;
-                case AgentAction.MoveLeft:
-                    _currentY--;
-                    break;
-                case AgentAction.MoveUp:
-                    _currentX--;
-                    break;
-                case AgentAction.MoveDown:
-                    _currentX++;
-                    break;
+                case AgentAction.MoveLeft: _minY = pos.y; break;
+                case AgentAction.MoveRight: _maxY = pos.y; break;
+                case AgentAction.MoveUp: _minX = pos.x; break;
+                case AgentAction.MoveDown: _maxX = pos.x; break;
             }
         }
 
-        public string DefaultSimpleReflexMove()
+        private bool IsEnvironmentFullyExploredAndClean()
         {
-            bool canMoveUp = _currentX > 0;
-            bool canMoveDown = _currentX < 1;
-            bool canMoveLeft = _currentY > 0;
-            bool canMoveRight = _currentY < 1;
-
-            if (canMoveUp && canMoveRight)
+            // Can't be done if agent still have memory of dirty cells
+            if (_worldModel.Values.Any(isDirty => isDirty))
             {
-                return AgentAction.MoveUp;
-            }
-            else if (canMoveDown && canMoveRight)
-            {
-                return AgentAction.MoveRight;
-            }
-            else if (canMoveDown && canMoveLeft)
-            {
-                return AgentAction.MoveDown;
-            }
-            else if (canMoveUp && canMoveLeft)
-            {
-                return AgentAction.MoveLeft;
-            }
-            else if (canMoveUp)
-            {
-                return AgentAction.MoveUp;
-            }
-            else if (canMoveDown)
-            {
-                return AgentAction.MoveDown;
-            }
-            else if (canMoveLeft)
-            {
-                return AgentAction.MoveLeft;
-            }
-            else if (canMoveRight)
-            {
-                return AgentAction.MoveRight;
+                return false;
             }
 
-            return null;
+            // Can't be done if agent haven't mapped all 4 boundaries yet
+            if (!_minX.HasValue || !_maxX.HasValue || !_minY.HasValue || !_maxY.HasValue)
+            {
+                return false;
+            }
+
+            // Calculate total expected grid volume from discovered bounds
+            int expectedTotalCells = (_maxX.Value - _minX.Value + 1) * (_maxY.Value - _minY.Value + 1);
+            
+            // Truly done when visited cells match discovered grid volume AND all are clean
+            return _worldModel.Count == expectedTotalCells;
         }
 
-        private string ChooseNextMove()
+        private bool CanMove(string action)
         {
-            if (_worldModel.TryGetValue((_currentX, _currentY + 1), out bool rightDirty) && rightDirty)
+            switch (action)
+            {
+                case AgentAction.MoveRight: return !_maxY.HasValue || _currentPos.y < _maxY.Value;
+                case AgentAction.MoveLeft: return !_minY.HasValue || _currentPos.y > _minY.Value;
+                case AgentAction.MoveDown: return !_maxX.HasValue || _currentPos.x < _maxX.Value;
+                case AgentAction.MoveUp: return !_minX.HasValue || _currentPos.x > _minX.Value;
+
+                default: return false;
+            }
+        }
+
+        private bool IsOppositeMove(string moveA, string moveB)
+        {
+            if (moveA == AgentAction.MoveRight && moveB == AgentAction.MoveLeft) return true;
+            if (moveA == AgentAction.MoveLeft && moveB == AgentAction.MoveRight) return true;
+            if (moveA == AgentAction.MoveUp && moveB == AgentAction.MoveDown) return true;
+            if (moveA == AgentAction.MoveDown && moveB == AgentAction.MoveUp) return true;
+
+            return false;
+        }
+
+        private string ChooseNextExplorationMove()
+        {
+            // Checking Right
+            if (CanMove(AgentAction.MoveRight) && 
+                !_worldModel.ContainsKey((_currentPos.x, _currentPos.y + 1)) && 
+                _lastAction != AgentAction.MoveLeft)
             {
                 return AgentAction.MoveRight;
             }
-            else if (_worldModel.TryGetValue((_currentX, _currentY - 1), out bool leftDirty) && leftDirty)
-            {
-                return AgentAction.MoveLeft;
-            }
-            else if (_worldModel.TryGetValue((_currentX - 1, _currentY), out bool upDirty) && upDirty)
-            {
-                return AgentAction.MoveUp;
-            }
-            else if (_worldModel.TryGetValue((_currentX + 1, _currentY), out bool downDirty) && downDirty)
+
+            // Checking Down
+            if (CanMove(AgentAction.MoveDown) && 
+                !_worldModel.ContainsKey((_currentPos.x + 1, _currentPos.y)) && 
+                _lastAction != AgentAction.MoveUp)
             {
                 return AgentAction.MoveDown;
             }
 
-            // Fallback to default simple reflex move if no adjacent dirty cells are found
-            return DefaultSimpleReflexMove();
+            // Checking Left
+            if (CanMove(AgentAction.MoveLeft) && 
+                !_worldModel.ContainsKey((_currentPos.x, _currentPos.y - 1)) && 
+                _lastAction != AgentAction.MoveRight)
+            {
+                return AgentAction.MoveLeft;
+            }
+
+            // Checking Up
+            if (CanMove(AgentAction.MoveUp) && 
+                !_worldModel.ContainsKey((_currentPos.x - 1, _currentPos.y)) && 
+                _lastAction != AgentAction.MoveDown)
+            {
+                return AgentAction.MoveUp;
+            }
+
+            // Fallback: Cycle through directions, respecting known boundaries
+            string[] directionalCycle = { AgentAction.MoveDown, AgentAction.MoveLeft, AgentAction.MoveUp, AgentAction.MoveRight };
+
+            foreach (var dir in directionalCycle)
+            {
+                if (CanMove(dir) && !IsOppositeMove(dir, _lastAction))
+                {
+                    return dir;
+                }
+            }
+
+            return AgentAction.NoOp; // Safest fallback if completely boxed in
         }
+
 
     }
 }

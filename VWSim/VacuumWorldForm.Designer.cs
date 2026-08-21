@@ -33,9 +33,9 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelVWSim = new System.Windows.Forms.Label();
             this.labelSubtitle = new System.Windows.Forms.Label();
+            this.agentSimulationPanelMBRA = new VWSim.AgentSimulationPanel();
             this.agentSimulationPanelRandom = new VWSim.AgentSimulationPanel();
             this.agentSimulationPanelSFA = new VWSim.AgentSimulationPanel();
-            this.agentSimulationPanelMBRA = new VWSim.AgentSimulationPanel();
             this.SuspendLayout();
             // 
             // buttonSimulate
@@ -56,7 +56,7 @@
             this.labelStatus.AutoSize = true;
             this.labelStatus.Font = new System.Drawing.Font("Inter", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelStatus.ForeColor = System.Drawing.Color.White;
-            this.labelStatus.Location = new System.Drawing.Point(69, 324);
+            this.labelStatus.Location = new System.Drawing.Point(31, 330);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(0, 19);
             this.labelStatus.TabIndex = 7;
@@ -98,6 +98,14 @@
             this.labelSubtitle.TabIndex = 10;
             this.labelSubtitle.Text = "Vacuum World Pocket Simulator";
             // 
+            // agentSimulationPanelMBRA
+            // 
+            this.agentSimulationPanelMBRA.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.agentSimulationPanelMBRA.Location = new System.Drawing.Point(1289, 61);
+            this.agentSimulationPanelMBRA.Name = "agentSimulationPanelMBRA";
+            this.agentSimulationPanelMBRA.Size = new System.Drawing.Size(430, 861);
+            this.agentSimulationPanelMBRA.TabIndex = 13;
+            // 
             // agentSimulationPanelRandom
             // 
             this.agentSimulationPanelRandom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
@@ -113,14 +121,6 @@
             this.agentSimulationPanelSFA.Name = "agentSimulationPanelSFA";
             this.agentSimulationPanelSFA.Size = new System.Drawing.Size(430, 861);
             this.agentSimulationPanelSFA.TabIndex = 12;
-            // 
-            // agentSimulationPanelMBRA
-            // 
-            this.agentSimulationPanelMBRA.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
-            this.agentSimulationPanelMBRA.Location = new System.Drawing.Point(1289, 61);
-            this.agentSimulationPanelMBRA.Name = "agentSimulationPanelMBRA";
-            this.agentSimulationPanelMBRA.Size = new System.Drawing.Size(430, 861);
-            this.agentSimulationPanelMBRA.TabIndex = 13;
             // 
             // VacuumWorldForm
             // 

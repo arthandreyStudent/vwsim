@@ -49,7 +49,7 @@ namespace VWSim
             // 
             this.richTextBoxLog.BackColor = System.Drawing.Color.Black;
             this.richTextBoxLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBoxLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBoxLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBoxLog.ForeColor = System.Drawing.Color.Lime;
             this.richTextBoxLog.Location = new System.Drawing.Point(14, 440);
             this.richTextBoxLog.Name = "richTextBoxLog";
